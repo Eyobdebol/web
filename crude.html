@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Store</title>
+    <style>
+      body {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Kidus Book Store</h1>
+    <input id="bookTitle" placeholder="Enter Book Name" type="text" />
+    <button onclick="add()">add</button>
+
+    <div id="BookList"></div>
+
+    <script>
+      let List = [];
+      const bookTitle = document.getElementById("bookTitle");
+      const BookList = document.getElementById("BookList");
+
+      function add() {
+        List.push(bookTitle.value);
+        bookTitle.value = "";
+        render();
+      }
+
+      function render() {
+        BookList.innerHTML = "";
+        List.forEach((listitem, i) => {
+          let bookitem = document.createElement("div");
+          bookitem.innerHTML = "listitem";
+          let deleteButton = document.createElement("button");
+          deleteButton.innerHTML = "Delete";
+          deleteButton.onclick = () => {
+            List.splice(i, 1);
+            render();
+          };
+          bookitem.appendChild(deleteButton);
+          BookList.appendChild(bookitem);
+        });
+      }
+
+      const labels = Utils.months({count: 7});
+const data = {
+  labels: labels,
+  datasets: [{
+    label: 'My First Dataset',
+    data: List,
+    backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(255, 159, 64, 0.2)',
+      'rgba(255, 205, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(201, 203, 207, 0.2)'
+    ],
+    borderColor: [
+      'rgb(255, 99, 132)',
+      'rgb(255, 159, 64)',
+      'rgb(255, 205, 86)',
+      'rgb(75, 192, 192)',
+      'rgb(54, 162, 235)',
+      'rgb(153, 102, 255)',
+      'rgb(201, 203, 207)'
+    ],
+    borderWidth: 1
+  }]
+};
+    </script>
+  </body>
+</html>

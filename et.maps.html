@@ -1,0 +1,70 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="https://code.highcharts.com/maps/highmaps.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+
+    <div id="container"></div>
+    <div> </div>
+    <script>
+        (async() => {
+            const topology = await fetch('https://code.highcharts.com/mapdata/countries/et/et-all.topo.json').then(response => response.json());
+            const data = [
+                ['et-be', 10],
+                ['et-2837', 11],
+                ['et-ha', 12],
+                ['et-sn', 13],
+                ['et-ga', 14],
+                ['et-aa',
+                    15
+                ],
+                ['et-so', 16],
+                ['et-dd', 17],
+                ['et-ti', 18],
+                ['et-af', 19],
+                ['et-am', 20]
+            ];
+            Highcharts.mapChart('container', {
+                chart: {
+                    map: topology
+                },
+                title: {
+                    text: 'Highcharts Maps basic demo'
+                },
+                subtitle: {
+                    text: 'Source map: <a href="https://code.highcharts.com/mapdata/countries/et/et-all.topo.json">Ethiopia</a>'
+                },
+                mapNavigation: {
+                    enabled: true,
+                    buttonOptions: {
+                        verticalAlign: 'bottom'
+                    }
+                },
+                colorAxis: {
+                    min: 0
+                },
+                series: [{
+                    data: data,
+                    name: 'Random data',
+                    states: {
+                        hover: {
+                            color: '#BADA55'
+                        }
+                    },
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.name}'
+                    }
+                }]
+            });
+        })();
+    </script>
+</body>
+
+</html>

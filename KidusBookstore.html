@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Store</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        text-align: center;
+      }
+      canvas {
+        margin: 20px auto;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Kidus Bookstore</h1>
+    <input id="booktitle" placeholder="Enter Book Name" type="text" />
+    <button onclick="add()">add</button>
+
+    <div id="BookList"></div>
+    <canvas id="bookChart"width="400" height="400"></canvas>
+
+    <script>
+      let List = [];
+      const booktitle = document.getElementById("booktitle");
+      const BookList = document.getElementById("BookList");
+      function add() {
+        List.push(booktitle.value);
+        booktitle.value = "";
+
+        render();
+        updateChart();
+      }
+
+      function render() {
+        BookList.innerHTML = "";
+        List.forEach((listitem, i) => {
+          let bookitem = document.createElement("div");
+          bookitem.innerHTML = listitem;
+          let deleteButton = document.createElement("button");
+          deleteButton.innerHTML = "Delete";
+          deleteButton.onclick = () => {
+            List.splice(i, 1);
+             render();
+            updateChart();
+          };
+          bookitem.appendChild(deleteButton);
+          BookList.appendChild(bookitem);
+        });
+      }
+
+      const chartdata = {
+        labels: ["Total Books"],
+        datasets: [
+          {
+            label: "Number of Books",
+            data: [0],
+            backgroundColor: ["rgba(54, 162, 235, 0.5)"],
+            borderColor: ["rgb(54, 162, 235)"],
+            borderWidth: 1,
+          },
+        ],
+      };
+
+      const config = {
+        type: "bar",
+        data: chartdata,
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      };
+      const bookChart = new Chart(document.getElementById("bookChart"), config);
+      function updateChart() {
+        chartdata.datasets[0].data[0] = List.length;
+        bookChart.update();
+      }
+    </script>
+  </body>
+</html>

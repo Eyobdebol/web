@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Reveal</title>
+  </head>
+  <body>
+    <button id="revealBtn">Reveal</button>
+
+    <p id="hiddenText" style="display: none">Hi I'm Kidus!</p>
+
+    <script>
+      const button = document.getElementById("revealBtn");
+      const hiddenText = document.getElementById("hiddenText");
+
+      button.addEventListener("click", () => {
+        setTimeout(() => {
+          hiddenText.style.display = "block";
+        }, 2000);
+      });
+    </script>
+  </body>
+</html>

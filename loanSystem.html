@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loan Management System</title>
+  </head>
+  <body>
+    <h1>Loan Management System</h1>
+
+    <div id="loanSummary"></div>
+
+    <script>
+      const applicants = [
+        { name: "John", income: 5000, loanAmount: 10000, duration: 2 },
+        { name: "Sarah", income: 3000, loanAmount: 8000, duration: 3 },
+        { name: "Mike", income: 2000, loanAmount: 4000, duration: 1 },
+      ];
+
+      let isEligible = (applicant) => applicant.income >= 2500;
+
+      const calculateInterestRate = (amount) => {
+        if (amount <= 5000) return 0.05;
+        else if (amount <= 10000) return 0.1;
+        else return 0.15;
+      };
+
+      const approvedApplicants = applicants.filter((applicant) =>
+        isEligible(applicant)
+      );
+
+      const loanSummaryDiv = document.getElementById("loanSummary");
+
+      approvedApplicants.forEach((applicant) => {
+        let rate = calculateInterestRate(applicant.loanAmount);
+        let totalRepayment = applicant.loanAmount + applicant.loanAmount * rate;
+        let monthlyRepayment = totalRepayment / (applicant.duration * 12);
+
+        loanSummaryDiv.innerHTML += `
+                <div>
+                    <p>Name: ${applicant.name}</p>
+                    <p>Loan Amount: $${applicant.loanAmount}</p>
+                    <p>Interest Rate: ${rate * 100}%</p>
+                    <p>Total Repayment: $${totalRepayment.toFixed(2)}</p>
+                    <p>Monthly Payment: $${monthlyRepayment.toFixed(2)}</p>
+                    <hr>
+                </div>
+            `;
+      });
+    </script>
+  </body>
+</html>

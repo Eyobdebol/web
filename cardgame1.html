@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Number Guess Game</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    .number-display {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+    .inputt {
+      width: 100%;
+      margin-top: 10px;
+      padding: 5px;
+      border-radius: 5px;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <div id="card_holder" class="row"></div>
+  </div>
+
+  <script>
+    const cardsContainer = document.getElementById("card_holder");
+    const displayTime = 5000; 
+
+    const generate_numbers = () => {
+      let numbers = [];
+      while (numbers.length < 6) {
+        let num = Math.floor(Math.random() * 30);
+        if (!numbers.includes(num)) numbers.push(num);
+      }
+      return numbers;
+    };
+
+    const numbers = generate_numbers();
+
+    numbers.forEach((num, index) => {
+      const col = document.createElement("div");
+      col.className = "col-md-2 mb-3";
+
+      const card = document.createElement("div");
+      card.className = "card p-3 text-center";
+
+      const numberDisplay = document.createElement("div");
+      numberDisplay.className = "number-display";
+      numberDisplay.innerText = num;
+
+      const input = document.createElement("input");
+      input.className = "inputt number-input";
+      input.type = "number";
+      input.placeholder = "Guess";
+
+      card.appendChild(numberDisplay);
+      card.appendChild(input);
+      col.appendChild(card);
+      cardsContainer.appendChild(col);
+    });
+
+    setTimeout(() => {
+      const numberDisplays = document.querySelectorAll(".number-display");
+      numberDisplays.forEach(el => el.style.visibility = "hidden");
+
+      const firstInput = document.querySelector(".number-input");
+      if (firstInput) firstInput.focus();
+    }, displayTime);
+  </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <div class="news mt-5">
+        <div class="row" id="row">
+
+        </div>
+    </div>
+    <script>
+        const news = document.getElementById('row');
+        const url = 'https://saurav.tech/NewsAPI/top-headlines/category/health/in.json';
+        fetch(url)
+        .then(response => response.json())
+        .then(data=>{
+            //console.log(data);
+            data.articles.forEach(article => {
+                const card = document.createElement('div');
+                card.className = 'card col-lg-3 col-md-4 col-sm-6';
+                card.style.margin = '15px';
+                news.appendChild(card);
+                
+                const imgUrl = document.createElement('img');
+                imgUrl.src = article.urlToImage;
+                imgUrl.style.width = '100%';
+                imgUrl.style.height = '200px';
+                imgUrl.alt = 'Image';
+                card.appendChild(imgUrl);
+
+                const title = document.createElement('h4');
+                title.innerText = article.title;
+                card.appendChild(title);
+
+                const description = document.createElement('p');
+                description.innerText = article.description;
+                card.appendChild(description);
+
+                const url1 = document.createElement('a');
+                url1.href = article.url;
+                url1.innerText = 'Read more';
+                card.appendChild(url1);
+                
+                const content = document.createElement('p');
+                content.innerText = article.content;
+                card.appendChild(content);
+
+                const author = document.createElement('h4');
+                author.innerText = article.author;
+                card.appendChild(author);
+
+                const publishedAt = document.createElement('p');
+                publishedAt.innerText = article.publishedAt;
+                card.appendChild(publishedAt);
+
+                news.appendChild(card);
+            });
+        })
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Store</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style> 
+    body {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Kidus Book Store</h1>
+  <input id="booktitle" placeholder="Enter Book Name" type="text">
+  <button onclick=" add()">add</button>
+  <div id="BookList" ></div>
+
+  <script>
+    let list = [];
+    const booktitle = document.getElementById("booktitle");
+    const BookList = document.getElementById("BookList");
+    function add(){
+      List.push(booktitle.value);
+      booktitle.value = "";
+      render();
+    }
+
+    function render(){
+      render.innerHTML="";
+      foeach()
+    }
+
+  </script>
+  
+</body>
+</html>

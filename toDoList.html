@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="container"></div>
+    <script>
+      let todo = [];
+      const container = document.getElementById("container");
+
+      const h1 = document.createElement("h1");
+      h1.innerHTML = "Todo List";
+      container.appendChild(h1);
+
+      const input = document.createElement("input");
+      container.appendChild(input);
+
+      const button = document.createElement("button");
+      button.innerHTML = "Submit";
+      container.appendChild(button);
+
+      const taskDiv = document.createElement("div");
+      container.appendChild(taskDiv);
+
+      button.onclick = () => {
+        todo.push(input.value);
+        console.log(todo);
+        input.value = "";
+        update();
+      };
+
+      function update() {
+        taskDiv.innerHTML = "";
+        todo.forEach((task, i) => {
+          const todoDiv = document.createElement("h5");
+          todoDiv.innerHTML = task;
+
+          const deleteButton = document.createElement("button");
+          deleteButton.innerHTML = "Delete";
+          deleteButton.onclick = () => {
+            todo.splice(i, 1);
+            update();
+          };
+
+          todoDiv.appendChild(deleteButton);
+          taskDiv.appendChild(todoDiv);
+        });
+      }
+    </script>
+  </body>
+</html>

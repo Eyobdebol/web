@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Memory Card Game</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #f6e8e8;
+        padding: 20px;
+      }
+
+      #game-container {
+        text-align: center;
+        margin-top: 30px;
+      }
+
+      #cards-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 30px;
+      }
+
+      .card {
+        width: 100px;
+        height: 150px;
+        background-color: #ff6b6b;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 36px;
+        font-weight: bold;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        transition: transform 0.2s;
+      }
+
+      .card:hover {
+        transform: scale(1.05);
+      }
+
+      #input-section {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+      }
+
+      #number-input {
+        padding: 10px;
+        font-size: 16px;
+        width: 200px;
+        margin-bottom: 15px;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+      }
+
+      button {
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: #ced845;
+      }
+
+      #result {
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+        min-height: 27px;
+      }
+
+      #start-btn {
+        margin-bottom: 20px;
+      }
+
+      .card {
+        width: 100px;
+        height: 150px;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="start-btn">Start Game</button>
+
+    <div id="game-container">
+      <div id="cards-container"></div>
+
+      <div id="input-section">
+        <input
+          type="text"
+          id="number-input"
+          placeholder="Enter numbers you saw (e.g., 1 3 5 2 4 6)"
+        />
+        <button id="submit-btn">Submit</button>
+      </div>
+
+      <div id="result"></div>
+    </div>
+
+    <script>
+      const cardCount = 6;
+      let numbers = [];
+      let displayTime = 2000;
+
+      const startBtn = document.getElementById("start-btn");
+      const cardsContainer = document.getElementById("cards-container");
+      const inputSection = document.getElementById("input-section");
+      const numberInput = document.getElementById("number-input");
+      const submitBtn = document.getElementById("submit-btn");
+      const resultDiv = document.getElementById("result");
+
+      startBtn.addEventListener("click", startGame);
+      submitBtn.addEventListener("click", checkAnswer);
+
+      function startGame() {
+        numbers = [];
+        for (let i = 0; i < cardCount; i++) {
+          numbers.push(Math.floor(Math.random() * 99) + 1);
+        }
+
+        cardsContainer.innerHTML = "";
+        resultDiv.textContent = "";
+        numberInput.value = "";
+
+        numbers.forEach((num) => {
+          const card = document.createElement("div");
+          card.className = "card";
+          card.textContent = num;
+          cardsContainer.appendChild(card);
+        });
+
+        startBtn.style.display = "none";
+
+        inputSection.style.display = "none";
+
+        setTimeout(() => {
+          cardsContainer.innerHTML = "";
+          inputSection.style.display = "flex";
+          numberInput.focus();
+        }, displayTime);
+      }
+
+      function checkAnswer() {
+        const userInput = numberInput.value.trim();
+
+        if (!userInput) {
+          resultDiv.textContent = "Please enter the numbers you saw!";
+          resultDiv.style.color = "red";
+          return;
+        }
+
+        const userNumbers = userInput.split(/\s+/).map((num) => parseInt(num));
+
+        if (userNumbers.some(isNaN)) {
+          resultDiv.textContent =
+            "Please enter only numbers separated by spaces!";
+          resultDiv.style.color = "red";
+          return;
+        }
+
+        if (userNumbers.length !== numbers.length) {
+          resultDiv.textContent = `You entered ${userNumbers.length} numbers, but there were ${numbers.length} cards.`;
+          const correctNumbers = new Set(numbers);
+          let correctCount = 0;
+
+          userNumbers.forEach((num) => {
+            if (correctNumbers.has(num)) {
+              correctCount++;
+            }
+          });
+
+          if (correctCount === numbers.length) {
+            resultDiv.textContent = "Perfect! You got all numbers correct!";
+            resultDiv.style.color = "green";
+          } else {
+            resultDiv.textContent = `You got ${correctCount} out of ${numbers.length} numbers correct.`;
+            resultDiv.style.color = "orange";
+          }
+
+          startBtn.style.display = "block";
+          inputSection.style.display = "none";
+        }
+        startBtn.style.display = "block";
+        inputSection.style.display = "none";
+      }
+    </script>
+  </body>
+</html>
+
+<!---
+const cardC = 6;
+const numbers = [];
+const displayTime = 5000;
+
+function startGame(){
+  numbers = [];
+  for (i = 0 ; i < cardC; i++){
+    numbers.push(Math.floor(Math.random() * 99) + 1);//
+  }
+-->
